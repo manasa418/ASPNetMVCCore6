@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Category>
+﻿@*
+@model IEnumerable<CoverType>
 @{
     ViewData["Title"] = "Index";
 }
@@ -6,7 +7,7 @@
 <div class ="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">Category List</h2>
+            <h2 class="text-primary">Covertype List</h2>
         </div>
         <div class= "col-6 text-end">
             <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
@@ -52,3 +53,4 @@
 
 </table>
 
+*@

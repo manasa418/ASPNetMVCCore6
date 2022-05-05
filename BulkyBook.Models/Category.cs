@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace ASPNetMVCCoreWeb.Models
+namespace BulkyBook.Models
 {
     public class Category
     {
@@ -13,6 +13,6 @@ namespace ASPNetMVCCoreWeb.Models
 
         [DisplayName("Display Order")]
         public int DisplayOrder { get; set; }
-        public DateTime CreatedDateTime { get; set; } = DateTime.Now;//To assign automatic value
+        public DateTime CreatedDateTime { get; set; } = DateTime.Now;
     }
 }
