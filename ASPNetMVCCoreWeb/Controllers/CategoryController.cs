@@ -1,24 +1,21 @@
-﻿using Bulkybook.DataAccess;
-using Bulkybook.DataAccess.Repository.IRepository;
-using BulkyBook.Models;
+﻿using ASPNetMVCCoreWeb.Data;
+using ASPNetMVCCoreWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNetMVCCoreWeb.Controllers
 {
-    [Area("Admin")]
     public class CategoryController : Controller
     {
-       
-        private readonly IunitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _db;
 
-        public CategoryController(IunitOfWork unitofWork)
+        public CategoryController(ApplicationDbContext db)
         {
-            _unitOfWork = unitofWork;
+            _db = db;
         }
         public IActionResult Index()
         {
             //var objCategoryList = _db.Categories.ToList();
-            IEnumerable<Category> objCategoryList = _unitOfWork.Category.GetAll();
+            IEnumerable<Category> objCategoryList = _db.Categories;
             return View(objCategoryList);
         }
 
@@ -39,10 +36,10 @@ namespace ASPNetMVCCoreWeb.Controllers
             {
                 ModelState.AddModelError("CustomError", "The Display order cannot exactly match the Name");
             }
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                _unitOfWork.Category.Add(obj);
-                _unitOfWork.Save();
+                _db.Categories.Add(obj);
+                _db.SaveChanges();
                 
                 
             }
@@ -56,8 +53,8 @@ namespace ASPNetMVCCoreWeb.Controllers
             { 
                 return NotFound();
             }
-            //var categoryFromDb = _db.Categories.Find(id);
-            var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(x => x.Id == id);
+            var categoryFromDb = _db.Categories.Find(id);
+            //var categoryFromDb = _db.Categories.SingleOrDefault(x => x.Id == id);
             //var categoryFromDb = _db.Categories.FirstOrDefault(u => u.Id == id);
             if (categoryFromDb == null)
             {
@@ -80,23 +77,13 @@ namespace ASPNetMVCCoreWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Update(obj);
-                _unitOfWork.Save();
+                _db.Categories.Update(obj);
+                _db.SaveChanges();
 
 
             }
             return RedirectToAction("Index");
 
         }
-
-        #region 
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var categorytList = _unitOfWork.Category.GetAll();
-            return Json(new { data = categorytList });
-        }
-        #endregion 
     }
 }

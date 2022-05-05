@@ -1,4 +1,4 @@
-namespace BulkyBook.Models
+namespace ASPNetMVCCoreWeb.Models
 {
     public class ErrorViewModel
     {
